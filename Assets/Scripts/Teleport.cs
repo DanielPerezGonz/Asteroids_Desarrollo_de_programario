@@ -8,7 +8,6 @@ public class Teleport : MonoBehaviour
     public float limit_y;
     void Update()
     {
-        //y 5.5 x 9.5
         if(transform.position.y > limit_y)
         {
             transform.position = new Vector3(transform.position.x, -limit_y, transform.position.z);
