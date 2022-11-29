@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public float speed_movement;
     public float speed_rotation;
     Rigidbody2D rb;
+    public GameObject spark;
 
     void Start()
     {
@@ -24,6 +25,11 @@ public class Player : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
         if (vertical > 0) { 
             rb.AddForce(transform.up * vertical * speed_movement * Time.deltaTime);
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            Instantiate(spark);
         }
     }
 }

@@ -241,6 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed_movement: 100
   speed_rotation: -100
+  spark: {fileID: 4578459655225806194, guid: 8b00d5b20cfebcc4fbb5526b7f43ca89, type: 3}
 --- !u!212 &1035031884
 SpriteRenderer:
   m_ObjectHideFlags: 0
