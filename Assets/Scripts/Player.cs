@@ -8,10 +8,12 @@ public class Player : MonoBehaviour
     public float speed_rotation;
     Rigidbody2D rb;
     public GameObject spark;
+    Animator anim;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -27,9 +29,12 @@ public class Player : MonoBehaviour
             rb.AddForce(transform.up * vertical * speed_movement * Time.deltaTime);
         }
 
+        anim.SetBool("Movement", vertical > 0);
+
         if (Input.GetButtonDown("Jump"))
         {
-            Instantiate(spark);
+            GameObject temp = Instantiate(spark, transform.position, transform.rotation);
+            Destroy(temp, 0.5f);
         }
     }
 }
