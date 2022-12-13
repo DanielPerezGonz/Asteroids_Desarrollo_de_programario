@@ -9,11 +9,15 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     public GameObject spark;
     Animator anim;
+    public GameObject particulasMuerte;
+
+    Collider2D coll;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        coll = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
@@ -36,5 +40,23 @@ public class Player : MonoBehaviour
             GameObject temp = Instantiate(spark, transform.position, transform.rotation);
             Destroy(temp, 0.5f);
         }
+    }
+
+    public void Muerte()
+    {
+        GameObject temp = Instantiate(particulasMuerte, transform.position, transform.rotation);
+        Destroy(temp, 3);
+
+        StartCoroutine(Respawn_Corutine());
+    }
+
+    IEnumerator Respawn_Corutine()
+    {
+        GameManager.instance.life--;
+        transform.position = Vector3.zero;
+        rb.velocity = Vector3.zero;
+        coll.enabled = false;
+        yield return new WaitForSeconds(3);
+        coll.enabled = true;
     }
 }

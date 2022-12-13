@@ -12,6 +12,8 @@ public class AsteroidControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        manager.asteroides_actuales++;
+
         rb = GetComponent<Rigidbody2D>();
         Vector2 direction = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         direction.Normalize();
@@ -33,7 +35,28 @@ public class AsteroidControl : MonoBehaviour
 
     public void Muerte()
     {
-        Destroy(gameObject);
+        if (transform.localScale.x > 0.25f)
+        {
+            GameObject temp1 = Instantiate(manager.asteroide, transform.position, Quaternion.identity);
+            temp1.GetComponent<AsteroidControl>().manager = manager;
+            temp1.transform.localScale = transform.localScale * 0.5f;
 
+            GameObject temp2 = Instantiate(manager.asteroide, transform.position, Quaternion.identity);
+            temp2.GetComponent<AsteroidControl>().manager = manager;
+            temp2.transform.localScale = transform.localScale * 0.5f;
+        }
+        Destroy(gameObject);
+        GameManager.instance.punt += 100; 
+        manager.asteroides_actuales--;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<Player>().Muerte();
+            Destroy(gameObject);
+            manager.asteroides_actuales--;
+        }
     }
 }
