@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class Player : MonoBehaviour
     public GameObject spark;
     Animator anim;
     public GameObject particulasMuerte;
-
+    public int dead = 0;
     Collider2D coll;
 
     void Start()
@@ -40,14 +41,17 @@ public class Player : MonoBehaviour
             GameObject temp = Instantiate(spark, transform.position, transform.rotation);
             Destroy(temp, 0.5f);
         }
+
+        
     }
 
     public void Muerte()
     {
         GameObject temp = Instantiate(particulasMuerte, transform.position, transform.rotation);
         Destroy(temp, 3);
-
-        StartCoroutine(Respawn_Corutine());
+        dead++;
+        if (dead >= 3) { Environment.Exit(0); }
+        if (dead < 3) { StartCoroutine(Respawn_Corutine()); }
     }
 
     IEnumerator Respawn_Corutine()
